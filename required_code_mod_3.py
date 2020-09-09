@@ -19,7 +19,7 @@ else:
 
 def beef_stuff(amount):
     order_amount = amount
-    if order_amount >= max_order:
+    if order_amount > max_order:
         msg = str(order_amount) + " pounds is more than currently available stock. Try again."
         while msg == str(order_amount) + " pounds is more than currently available stock. Try again.":
             print(msg)
@@ -39,7 +39,15 @@ def beef_stuff(amount):
             more_beef = input("Would you like to order more beef? (Yes/No)").lower()
             if more_beef == "yes":
                 order_amount_2 = float(input("How many more pounds of beef would you like to order?"))
-                msg = beef_stuff(order_amount + order_amount_2)
+                if (order_amount + order_amount_2) > max_order:
+                    msg = str(order_amount) + " pounds is more than currently available stock. Try again."
+                    while msg == str(order_amount) + " pounds is more than currently available stock. Try again.":
+                        print(msg)
+                        print("You already have " + str(order_amount) + " pounds costing $" + str(order_price) + " ordered. Continue")
+                        order_amount_2 = float(input("How many more pounds of beef would you like to order?"))
+                        msg = beef_stuff(order_amount + order_amount_2)
+                else:
+                    msg = beef_stuff(order_amount + order_amount_2)
             elif more_beef == "no":
                 msg = str(order_amount) + " pounds costs $" + order_price + ". Link to Checkout:"
             else:
